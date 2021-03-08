@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  database:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: main
+      POSTGRES_PASSWORD: main
+      POSTGRES_DB: sun
+    ports: [5432:5432]
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  php:
+    image: sunfinance/local
+    build:
+      context: ./docker/php
+      args:
+        USER_ID: 1001
+    ports:
+      - 8000:80
+    volumes:
+      - .:/var/www
+      - ./docker/php/config.ini:/usr/local/etc/php/conf.d/config.ini
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+volumes:
+  db_data: {}
+
+networks:
+  app-network:
+    driver: bridge
