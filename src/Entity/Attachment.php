@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AttachmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
 
 /**
@@ -21,9 +22,29 @@ class Attachment
     private int $id;
 
     /**
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50
+     * )
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private string $name;
+
+    /**
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 100
+     * )
+     * @Assert\NotBlank
+     * @ORM\Column(type="text")
+     */
+    private string $path;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Document::class, mappedBy="attacment", cascade={"persist", "remove"})
+     */
+    private Document $document;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -34,16 +55,6 @@ class Attachment
      * @ORM\Column(type="datetime", nullable=true)
      */
     private DateTimeInterface $updateAt;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private string $path;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Document::class, mappedBy="attacment", cascade={"persist", "remove"})
-     */
-    private Document $document;
 
     public function getId(): ?int
     {

@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
 
 /**
@@ -21,11 +22,21 @@ class Document
     private int $id;
 
     /**
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50
+     * )
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private string $name;
 
     /**
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50
+     * )
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private string $slug;
