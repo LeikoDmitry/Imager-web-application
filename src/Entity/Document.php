@@ -4,16 +4,20 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DocumentRepository;
+use App\Tools\AutoUpdateOrCreateDateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
 
 /**
  * @ApiResource()
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass=DocumentRepository::class)
  */
 class Document
 {
+    use AutoUpdateOrCreateDateTime;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -86,7 +90,7 @@ class Document
         return $this;
     }
 
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -98,7 +102,7 @@ class Document
         return $this;
     }
 
-    public function getUpdateAt(): DateTimeInterface
+    public function getUpdateAt(): ?DateTimeInterface
     {
         return $this->updateAt;
     }

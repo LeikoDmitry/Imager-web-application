@@ -4,16 +4,20 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AttachmentRepository;
+use App\Tools\AutoUpdateOrCreateDateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
 
 /**
  * @ApiResource()
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass=AttachmentRepository::class)
  */
 class Attachment
 {
+    use AutoUpdateOrCreateDateTime;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -44,17 +48,17 @@ class Attachment
     /**
      * @ORM\OneToOne(targetEntity=Document::class, mappedBy="attacment", cascade={"persist", "remove"})
      */
-    private Document $document;
+    private $document;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private DateTimeInterface $createdAt;
+    private ?DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private DateTimeInterface $updateAt;
+    private ?DateTimeInterface $updateAt;
 
     public function getId(): ?int
     {
@@ -73,7 +77,7 @@ class Attachment
         return $this;
     }
 
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -85,7 +89,7 @@ class Attachment
         return $this;
     }
 
-    public function getUpdateAt(): DateTimeInterface
+    public function getUpdateAt(): ?DateTimeInterface
     {
         return $this->updateAt;
     }
@@ -109,7 +113,7 @@ class Attachment
         return $this;
     }
 
-    public function getDocument(): Document
+    public function getDocument(): ?Document
     {
         return $this->document;
     }
