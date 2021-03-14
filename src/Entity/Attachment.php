@@ -2,15 +2,46 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AttachmentRepository;
 use App\Tools\AutoUpdateOrCreateDateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\AttachmentController;
 use DateTimeInterface;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *         "post"={
+ *             "controller"=AttachmentController::class,
+ *             "deserialize"=false,
+ *             "validation_groups"={"Default", "media_object_create"},
+ *             "openapi_context"={
+ *                 "requestBody"={
+ *                     "content"={
+ *                         "multipart/form-data"={
+ *                             "schema"={
+ *                                 "type"="object",
+ *                                 "properties"={
+ *                                     "file"={
+ *                                         "type"="string",
+ *                                         "format"="binary"
+ *                                     }
+ *                                 }
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }
+ *         },
+ *         "get"
+ *     },
+ *     itemOperations={
+ *         "get"
+ *     }
+ *)
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass=AttachmentRepository::class)
  */
@@ -19,6 +50,7 @@ class Attachment
     use AutoUpdateOrCreateDateTime;
 
     /**
+     * @ApiProperty()
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -26,6 +58,7 @@ class Attachment
     private int $id;
 
     /**
+     * @ApiProperty()
      * @Assert\Length(
      *     min = 2,
      *     max = 50
@@ -36,6 +69,7 @@ class Attachment
     private string $name;
 
     /**
+     * @ApiProperty()
      * @Assert\Length(
      *     min = 2,
      *     max = 100

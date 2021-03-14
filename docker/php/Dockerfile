@@ -1,7 +1,7 @@
-FROM php:8.0-apache
+FROM php:7.4-apache
 
 ## Update package information
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y nano \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libxml2-dev \
@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
         libonig-dev \
         libicu-dev \
         libzip-dev \
-        librabbitmq-dev libssl-dev
+        librabbitmq-dev libssl-dev \
+        libmagickwand-dev
 
 ## Configure Apache
 RUN a2enmod rewrite \
@@ -61,8 +62,8 @@ RUN pecl install apcu \
 
 
 ## redis pecl options
-RUN pecl install igbinary xdebug \
-     && docker-php-ext-enable igbinary xdebug \
+RUN pecl install igbinary xdebug imagick \
+     && docker-php-ext-enable igbinary xdebug imagick \
      && apt-get install --yes libzstd-dev \
      && pecl install redis \
      && docker-php-ext-enable redis
@@ -70,5 +71,6 @@ RUN pecl install igbinary xdebug \
 ARG USER_ID=0
 RUN groupadd -r appuser
 RUN useradd -r -u ${USER_ID} -g appuser appuser
+RUN sed -i 's!<policy domain="coder" rights="none" pattern="PDF" />!<policy domain="coder" rights="read|write" pattern="PDF" />!g' /etc/ImageMagick-6/policy.xml
 
 WORKDIR /var/www

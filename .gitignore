@@ -11,3 +11,4 @@
 .env
 .idea
 symfony.lock
+public/uploads
