@@ -3,8 +3,10 @@
 namespace App\Service;
 
 use App\Exception\FileException;
+use App\Message\UploadFileMessage;
 use Spatie\PdfToImage\Exceptions\PdfDoesNotExist;
 use Spatie\PdfToImage\Exceptions\InvalidFormat;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Spatie\PdfToImage\Pdf;
 
 class FileGenerator
@@ -47,6 +49,6 @@ class FileGenerator
 
     public function getFileName(string $path): string
     {
-        return basename();
+        return basename($path);
     }
 }

@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y nano \
         libicu-dev \
         libzip-dev \
         librabbitmq-dev libssl-dev \
-        libmagickwand-dev
+        libmagickwand-dev librabbitmq-dev
 
 ## Configure Apache
 RUN a2enmod rewrite \
@@ -62,8 +62,8 @@ RUN pecl install apcu \
 
 
 ## redis pecl options
-RUN pecl install igbinary xdebug imagick \
-     && docker-php-ext-enable igbinary xdebug imagick \
+RUN pecl install igbinary xdebug imagick amqp \
+     && docker-php-ext-enable igbinary xdebug imagick amqp \
      && apt-get install --yes libzstd-dev \
      && pecl install redis \
      && docker-php-ext-enable redis
