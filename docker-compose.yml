@@ -30,6 +30,19 @@ services:
     networks:
       - app-network
 
+  php-cli:
+    image: sunfinance-concole/local
+    build:
+      context: ./docker/php-cli
+      args:
+        USER_ID: 1001
+    volumes:
+      - .:/var/www
+      - ./docker/php/config.ini:/usr/local/etc/php/conf.d/config.ini
+    networks:
+      - app-network
+    command: php bin/console messenger:consume async -vv --time-limit=3600
+
   rabbitmq:
     image: rabbitmq:3.8-management
     ports:

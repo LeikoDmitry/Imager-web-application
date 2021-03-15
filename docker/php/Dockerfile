@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y nano \
         libicu-dev \
         libzip-dev \
         librabbitmq-dev libssl-dev \
-        libmagickwand-dev librabbitmq-dev
+        libmagickwand-dev librabbitmq-dev \
+        supervisor
 
 ## Configure Apache
 RUN a2enmod rewrite \
@@ -72,5 +73,4 @@ ARG USER_ID=0
 RUN groupadd -r appuser
 RUN useradd -r -u ${USER_ID} -g appuser appuser
 RUN sed -i 's!<policy domain="coder" rights="none" pattern="PDF" />!<policy domain="coder" rights="read|write" pattern="PDF" />!g' /etc/ImageMagick-6/policy.xml
-
 WORKDIR /var/www
