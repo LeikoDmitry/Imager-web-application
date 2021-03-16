@@ -11,12 +11,16 @@ RUN apt-get update && apt-get install -y \
         libonig-dev \
         libicu-dev \
         libzip-dev \
-        librabbitmq-dev libssl-dev \
-        libmagickwand-dev librabbitmq-dev
+        librabbitmq-dev \
+        libssl-dev
 
 ## Install zip libraries and extension
 RUN apt-get install --yes git zlib1g-dev libzip-dev \
     && docker-php-ext-install zip
+
+## PostgreSQL PDO support
+RUN apt-get install --yes libpq-dev \
+     && docker-php-ext-install pdo_pgsql
 
 ## Install intl library and extension
 RUN apt-get install --yes libicu-dev \

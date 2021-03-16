@@ -27,6 +27,7 @@ services:
       - ./docker/php/config.ini:/usr/local/etc/php/conf.d/config.ini
     depends_on:
       - database
+      - rabbitmq
     networks:
       - app-network
 
@@ -42,18 +43,20 @@ services:
     networks:
       - app-network
     command: php bin/console messenger:consume async -vv --time-limit=3600
+    depends_on:
+      - rabbitmq
+    restart: on-failure
 
   rabbitmq:
     image: rabbitmq:3.8-management
     ports:
-        - 5672:5672
-        - 8080:15672
+      - 5672:5672
+      - 8080:15672
     environment:
       RABBITMQ_DEFAULT_USER: test
       RABBITMQ_DEFAULT_PASS: test
     networks:
       - app-network
-
 
 volumes:
   db_data: {}

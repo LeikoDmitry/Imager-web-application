@@ -33,7 +33,7 @@ class Document
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $name;
+    private ?string $name;
 
     /**
      * @Assert\Length(
@@ -43,7 +43,7 @@ class Document
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $slug;
+    private ?string $slug;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)

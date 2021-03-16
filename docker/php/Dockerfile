@@ -11,9 +11,9 @@ RUN apt-get update && apt-get install -y nano \
         libonig-dev \
         libicu-dev \
         libzip-dev \
-        librabbitmq-dev libssl-dev \
-        libmagickwand-dev librabbitmq-dev \
-        supervisor
+        librabbitmq-dev \
+        libssl-dev \
+        libmagickwand-dev
 
 ## Configure Apache
 RUN a2enmod rewrite \
