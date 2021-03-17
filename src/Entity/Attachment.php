@@ -13,6 +13,7 @@ use DateTimeInterface;
 
 /**
  * @ApiResource(
+ *     routePrefix="documents",
  *     collectionOperations={
  *         "post"={
  *             "controller"=AttachmentController::class,
