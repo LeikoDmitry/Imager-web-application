@@ -30,7 +30,6 @@ services:
       - rabbitmq
     networks:
       - app-network
-    user: www-data
 
   php-cli:
     image: sunfinance-concole/local
@@ -47,7 +46,6 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
-    user: www-data
 
   rabbitmq:
     image: rabbitmq:3.8-management
