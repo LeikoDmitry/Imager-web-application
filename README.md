@@ -38,7 +38,13 @@ You should also run commands such as `composer` in the container.
 The container environment is named `php` so you will pass that value to docker-compose run:
 
 ```bash
-$ docker-compose run --rm php composer install --no-dev
+$ docker-compose run --rm php composer install
+```
+ 
+Change the permissions on folders `var` and `public/uploads` follow command:
+
+```bash
+$ sudo chmod 777 -R var public/uploads
 ```
 
 At this point, you can visit `http://localhost:8000` to see the site running.
