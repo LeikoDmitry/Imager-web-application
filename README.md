@@ -38,7 +38,7 @@ You should also run commands such as `composer` in the container.
 The container environment is named `php` so you will pass that value to docker-compose run:
 
 ```bash
-$ docker-compose run --rm php composer install
+$ docker-compose run --rm -u${UID} php composer install
 ```
  
 Change the permissions on folders `var` and `public/uploads` follow command:
@@ -57,3 +57,7 @@ Creating the new documents with attachment
 ```bash
 curl -i -X POST -H "Content-Type: multipart/form-data" -F "pdfDocument=@test.pdf" http://localhost:8000/documents/attachments
 ```
+
+Issues
+------
+TODO
